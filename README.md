@@ -1,4 +1,5 @@
-#Explainable Graph Neural Networks for Power Grid Fault Detection
+# Explainable Graph Neural Networks for Power Grid Fault Detection
+
 This contains the implementation that generated the findings that supported our paper:
 
 R. Bosso, C. Chang, M. Zarif and Y. Tang, [Explainable Graph Neural Networks for Power Grid Fault Detection](https://ieeexplore.ieee.org/abstract/document/11088107)
@@ -7,7 +8,7 @@ My original thesis/dissertation can be found here as well:
 
 Richard Bosso, [Explainable Graph Learning for Power Grid Fault Detection](https://www.proquest.com/openview/588a3357581b9cbf237e5a017c9d4643/1?pq-origsite=gscholar&cbl=18750&diss=y)
 
-##Cite
+## Cite
 Use the following citation to give attribution to the paper and code provided:
 ```
 @article{bosso2025explainable,
