@@ -1,0 +1,41 @@
+dss = py_dss_interface.DSS()
+opendss_path = "C:/Program Files/OpenDSS"
+dss = py_dss_interface.DSS(opendss_path)
+# dss_file = 'C:/OpenDSS_Basics/13Bus/IEEE13Nodeckt.dss'
+# dss_file = os.getcwd()
+print(dss_file)
+#Compile, fault
+dss.text("compile {}".format(dss_file))
+
+#Objects needed to define PVSystem:
+dss.text("New XYCurve.Eff npts=4 xarray=[.1 .2 .4 1.0] yarray=[1 1 1 1]")
+dss.text("New XYCurve.FatorPvsT npts=4 xarray=[0 25 75 100] yarray=[1 1 1 1]") 
+dss.text("New Loadshape.Irrad npts=24 interval=1 mult=[0 0 0 0 0 0 .1 .2 .3 .5 .8 .9 1.0 1.0 .99 .9 .7 .4 .1 0 0 0 0 0]") 
+dss.text("New Tshape.Temp npts=24 interval=1 temp=[25 25 25 25 25 25 25 25 35 40 45 50 60 60 55 40 35 30 25 25 25 25 25 25]")
+
+irradiance = 1
+# irradiance = irrads
+dss.text("New PVSystem.PV phases=3 bus1=890 Pmpp=" + str(270) +" kV=" + str(4.16) +" kVA=" + str(270) +" conn=wye effcurve=Eff P-TCurve=FatorPvsT %Pmpp=100 irradiance=" + str(irradiance) +" daily=Irrad Tdaily=Temp")
+dss.text("New PVSystem.PV2 phases=3 bus1=844 Pmpp=" + str(245) +" kV=" + str(24.9) +" kVA=" + str(245) +" conn=wye effcurve=Eff P-TCurve=FatorPvsT %Pmpp=100 irradiance=" + str(irradiance) +" daily=Irrad Tdaily=Temp")
+# dss.text("New PVSystem.PV3 phases=3 bus1=634 Pmpp=" + str(280) +" kV=" + str(0.48) +" kVA=" + str(280) +" conn=wye effcurve=Eff P-TCurve=FatorPvsT %Pmpp=100 irradiance=" + str(irradiance) +" daily=Irrad Tdaily=Temp")
+
+#FaultEntered = fault[0]
+# dss.text("New Fault.FALL bus1=840 phases=3") #800
+# dss.text('New Fault.F1 phases=3 bus1=814 bus2=814.4.4.4 r=0.0001') #Neutral Example
+#dss.text(FaultEntered) 
+#dss.solution.load_mult = Mults
+
+# dss.text("Solve")
+dss.solution.solve()
+# if dss.solution.converged:
+#     print("Circuit Solved Successfully")
+# else:
+#     print("Circuit Not Solved")
+#     print(fault)
+        
+ConvergeSolution = dss.solution.converged
+
+filepath = dss.text("Export Voltages")
+print(filepath)
+VoltageExport = pd.read_csv(filepath)
+VoltageExport
